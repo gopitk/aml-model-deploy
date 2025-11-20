@@ -1,0 +1,4 @@
+name: vllm-gradio-env
+image: 3dc481fd416342a2905abfb19a05f448.azurecr.io/custom/vllmgradio:v1
+description: Environment using custom Docker image with VLLM 0.2.7 and Gradio
+

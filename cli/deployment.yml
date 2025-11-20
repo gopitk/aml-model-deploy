@@ -1,0 +1,37 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: gradio
+endpoint_name: vllm-gradio
+environment_variables:
+  VLLM_MODEL: "facebook/opt-125m"
+  VLLM_ARGS: "--enforce-eager"
+  VLLM_BASE_URL: "http://localhost:8000/v1"
+  VLLM_GPU_MEMORY_UTILIZATION: "1.0"
+environment:
+  image: YOUR-WORKSPACE-ACR.azurecr.io/YOUR-DOCKER-REPONAME:YOUR-TAG # REPLACE With YOUR IMAGE
+  inference_config:
+    liveness_route:
+      port: 8000
+      path: /health
+    readiness_route:
+      port: 8000
+      path: /health
+    scoring_route:
+      port: 7860
+      path: /
+instance_type: Standard_NC6s_v3 # REPLACE With Your VM instance type
+instance_count: 1
+request_settings:
+    request_timeout_ms: 10000
+    max_concurrent_requests_per_instance: 1
+liveness_probe:
+  initial_delay: 10
+  period: 10
+  timeout: 2
+  success_threshold: 1
+  failure_threshold: 30
+readiness_probe:
+  initial_delay: 120
+  period: 10
+  timeout: 2
+  success_threshold: 1
+  failure_threshold: 30

@@ -1,0 +1,5 @@
+#!/bin/bash
+exec 2>&1
+# You need to be in the /workspace directory to find the VLLM shared libraries
+cd /workspace
+exec /app/entrypoint.sh
